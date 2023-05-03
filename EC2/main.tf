@@ -1,6 +1,6 @@
-# provider "aws" {
-#   region = var.region
-# }
+provider "aws" {
+  region = var.region
+}
 # resource "aws_instance" "public" {
 #   ami           = "ami-0aa2b7722dc1b5612"
 #   instance_type = "t2.micro"
