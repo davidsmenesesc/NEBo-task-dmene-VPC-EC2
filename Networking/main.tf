@@ -17,7 +17,7 @@ resource "aws_subnet" "snet-public" {
 }
 resource "aws_subnet" "snet-private" {
   vpc_id = aws_vpc.vnet-nebo.id
-  cidr_block = "10.0.1.128/17"
+  cidr_block = "10.0.128.0/17"
   availability_zone = "us-east-1a"
   tags = {
     Name = "snet-private"
