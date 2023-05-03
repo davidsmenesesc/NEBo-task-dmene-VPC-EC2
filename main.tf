@@ -15,5 +15,6 @@ module "Network" {
 }
 module "EC2"{
   source = "./EC2"
-  subnet_ids = module.Network.subnet_ids
+  subnet_ids_pub = module.Network.subnet_ids_pub
+  subnet_ids_priv = module.Network.subnet_ids_priv 
 }

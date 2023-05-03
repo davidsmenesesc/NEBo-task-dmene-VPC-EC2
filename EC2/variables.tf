@@ -3,7 +3,11 @@ variable "region" {
   type = string
   default = "us-east-1"
 }
-variable "subnet_ids" {
+variable "subnet_ids_pub" {
   description = "List of IDs for the subnets to launch instances in"
-  type        = list(string)
+  type        = string
+}
+variable "subnet_ids_priv" {
+  description = "List of IDs for the subnets to launch instances in"
+  type        = string
 }
