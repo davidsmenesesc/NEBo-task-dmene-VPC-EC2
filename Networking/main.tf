@@ -1,3 +1,29 @@
+resource "aws_security_group" "public" {
+  name_prefix = "public"
+  vpc_id = var.vpc_id
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  tags = {
+    Name = "Public Security Group"
+  }
+}
+resource "aws_security_group" "private" {
+  name_prefix = "private"
+  vpc_id = var.vpc_id
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    security_groups = [aws_security_group.public.id]
+  }
+  tags = {
+    Name = "Private Security Group"
+  }
+}
 provider "aws" {
   region = var.region
 }
