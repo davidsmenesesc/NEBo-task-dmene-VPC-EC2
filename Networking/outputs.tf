@@ -1,8 +1,8 @@
-output "subnet_ids_pub" {
+output "subnet_id_pub" {
   description = "List of IDs for the created subnets"
-  value       = snet-public.public.*.id
+  value       = aws_subnet.snet-public.id
 }
-output "subnet_ids_priv" {
+output "subnet_id_priv" {
   description = "List of IDs for the created subnets"
-  value       = snet-private.public.*.id
+  value       = aws_subnet.snet-private.id
 }
