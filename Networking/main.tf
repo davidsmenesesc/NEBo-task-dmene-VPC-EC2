@@ -52,9 +52,21 @@ resource "aws_security_group" "private" {
     Name = "Private Security Group"
   }
 }
+# Define the internet gateway
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.vnet-nebo.id
+}
+# Define the public route table
+resource "aws_route_table" "public-rt" {
+  vpc_id = aws_vpc.vnet-nebo.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
+}
 resource "aws_route_table_association" "snet-public" {
   subnet_id = aws_subnet.snet-public.id
-  route_table_id = aws_vpc.vnet-nebo.default_route_table_id
+  route_table_id = aws_route_table.public-rt.id
   depends_on = [ aws_subnet.snet-public ]
 }
 resource "aws_route_table_association" "snet-private" {
