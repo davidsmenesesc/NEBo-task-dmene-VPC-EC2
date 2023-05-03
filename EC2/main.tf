@@ -31,5 +31,11 @@ resource "aws_instance" "private" {
   tags = {
     Name = "Private Instance"
   }
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    private_key = file("~/.ssh/mykeypair.pem")
+    host        = self.public_ip
+  }
   depends_on = [ var.priv_sg ]
 }
