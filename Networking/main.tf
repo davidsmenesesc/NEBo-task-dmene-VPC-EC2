@@ -14,6 +14,7 @@ resource "aws_subnet" "snet-public" {
   tags = {
     Name = "snet-public"
   }
+  depends_on = [ aws_vpc.vnet-nebo ]
 }
 resource "aws_subnet" "snet-private" {
   vpc_id = aws_vpc.vnet-nebo.id
@@ -22,12 +23,15 @@ resource "aws_subnet" "snet-private" {
   tags = {
     Name = "snet-private"
   }
+  depends_on = [ aws_vpc.vnet-nebo ]
 }
 resource "aws_route_table_association" "snet-public" {
   subnet_id = aws_subnet.snet-public.id
   route_table_id = aws_vpc.vnet-nebo.default_route_table_id
+  depends_on = [ aws_subnet.snet-public ]
 }
 resource "aws_route_table_association" "snet-private" {
   subnet_id = aws_subnet.snet-private.id
   route_table_id = aws_vpc.vnet-nebo.default_route_table_id
+  depends_on = [ aws_subnet.snet-private ]
 }

@@ -1,0 +1,56 @@
+provider "aws" {
+  region = var.region
+}
+resource "aws_security_group" "public" {
+  name_prefix = "public"
+  
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  tags = {
+    Name = "Public Security Group"
+  }
+}
+resource "aws_security_group" "private" {
+  name_prefix = "private"
+  
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    security_groups = [aws_security_group.public.id]
+  }
+  
+  tags = {
+    Name = "Private Security Group"
+  }
+}
+resource "aws_instance" "public" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  key_name      = "NEBo-key"
+  subnet_id     = "snet-public"
+  vpc_security_group_ids = [aws_security_group.public.id]
+  
+  tags = {
+    Name = "Public Instance"
+  }
+  depends_on = [ aws_security_group.public ]
+}
+
+resource "aws_instance" "private" {
+  ami           = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+  key_name      = "NEBo-key"
+  subnet_id     = "snet-private"
+  vpc_security_group_ids = [aws_security_group.private.id]
+  
+  tags = {
+    Name = "Private Instance"
+  }
+  depends_on = [ aws_security_group.private ]
+}

@@ -1,11 +1,3 @@
-# terraform {
-#     cloud {
-#         organization = "davidsmenesesc"
-#         workspaces {
-#         name = ""
-#         }
-#     }
-# }
 terraform {
   backend "remote" {
     organization = "davidsmenesesc"
@@ -20,4 +12,7 @@ provider "aws"{
 }
 module "Network" {
   source = "./Networking"
+}
+module "EC2"{
+  source = "./EC2"
 }
