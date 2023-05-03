@@ -8,7 +8,7 @@ resource "aws_vpc" "vnet-nebo" {
   }
 }
 resource "aws_subnet" "snet-public" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.vnet-nebo.id
   cidr_block = "10.0.0.0/17"
   availability_zone = "us-east-1a"
   tags = {
@@ -16,7 +16,7 @@ resource "aws_subnet" "snet-public" {
   }
 }
 resource "aws_subnet" "snet-private" {
-  vpc_id = aws_vpc.main.id
+  vpc_id = aws_vpc.vnet-nebo.id
   cidr_block = "10.0.1.128/17"
   availability_zone = "us-east-1a"
   tags = {
