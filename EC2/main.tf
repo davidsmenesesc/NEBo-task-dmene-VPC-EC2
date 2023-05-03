@@ -33,7 +33,7 @@ resource "aws_instance" "public" {
   ami           = "ami-0aa2b7722dc1b5612"
   instance_type = "t2.micro"
   key_name      = "NEBo-key"
-  subnet_id     = "snet-public"
+  subnet_id     = var.subnet_ids[0]
   vpc_security_group_ids = [aws_security_group.public.id]
   
   tags = {
@@ -46,7 +46,7 @@ resource "aws_instance" "private" {
   ami           = "ami-0aa2b7722dc1b5612"
   instance_type = "t2.micro"
   key_name      = "NEBo-key"
-  subnet_id     = "snet-private"
+  subnet_id     = var.subnet_ids[1]
   vpc_security_group_ids = [aws_security_group.private.id]
   
   tags = {
