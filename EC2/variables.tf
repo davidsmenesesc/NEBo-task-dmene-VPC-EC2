@@ -11,3 +11,7 @@ variable "subnet_ids_priv" {
   description = "List of IDs for the subnets to launch instances in"
   type        = string
 }
+variable "vpc_id" {
+  description = "List of IDs for the subnets to launch instances in"
+  type        = string
+}
