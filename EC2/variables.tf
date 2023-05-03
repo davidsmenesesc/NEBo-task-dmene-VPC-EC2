@@ -15,3 +15,11 @@ variable "vpc_id" {
   description = "List of IDs for the subnets to launch instances in"
   type        = string
 }
+variable "pub_sg" {
+  description = "List of IDs for the subnets to launch instances in"
+  type        = string
+}
+variable "priv_sg" {
+  description = "List of IDs for the subnets to launch instances in"
+  type        = string
+}
