@@ -30,7 +30,7 @@ resource "aws_security_group" "private" {
   }
 }
 resource "aws_instance" "public" {
-  ami           = "ami-0c55b159cbfafe1f0"
+  ami           = "ami-0aa2b7722dc1b5612"
   instance_type = "t2.micro"
   key_name      = "NEBo-key"
   subnet_id     = "snet-public"
@@ -43,7 +43,7 @@ resource "aws_instance" "public" {
 }
 
 resource "aws_instance" "private" {
-  ami           = "ami-0c55b159cbfafe1f0"
+  ami           = "ami-0aa2b7722dc1b5612"
   instance_type = "t2.micro"
   key_name      = "NEBo-key"
   subnet_id     = "snet-private"
