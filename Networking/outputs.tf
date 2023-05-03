@@ -10,11 +10,11 @@ output "vpc_id" {
   description = "List of IDs for the created subnets"
   value       = aws_vpc.vnet-nebo.id
 }
-output "priv_sg" {
+output "pub_sg" {
   description = "List of IDs for the created subnets"
   value       = aws_security_group.public.id
 }
-output "pub_sg" {
+output "priv_sg" {
   description = "List of IDs for the created subnets"
   value       = aws_security_group.private.id
 }
