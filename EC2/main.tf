@@ -6,6 +6,7 @@ resource "aws_instance" "public" {
   instance_type = "t2.micro"
   key_name      = "NEBo-key"
   subnet_id     = var.subnet_ids_pub
+  associate_public_ip_address = true
   vpc_security_group_ids = [ var.pub_sg ]
   
   tags = {
