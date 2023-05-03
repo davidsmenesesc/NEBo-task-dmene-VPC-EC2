@@ -24,10 +24,10 @@ resource "aws_subnet" "snet-private" {
   }
 }
 resource "aws_route_table_association" "snet-public" {
-  subnet_id = aws_subnet.subnet1.id
+  subnet_id = aws_subnet.snet-public.id
   route_table_id = aws_vpc.vnet-nebo.default_route_table_id
 }
 resource "aws_route_table_association" "snet-private" {
-  subnet_id = aws_subnet.subnet2.id
+  subnet_id = aws_subnet.snet-private.id
   route_table_id = aws_vpc.vnet-nebo.default_route_table_id
 }
