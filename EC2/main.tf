@@ -7,7 +7,7 @@ resource "aws_instance" "public" {
   key_name      = "Nebou-key"
   subnet_id     = var.subnet_ids_pub
   associate_public_ip_address = true
-  vpc_security_group_ids = [ var.vio_sg]
+  vpc_security_group_ids = [ var.pub_sg ]
   
   tags = {
     Name = "Public Instance"
@@ -18,7 +18,7 @@ resource "aws_instance" "public" {
     private_key = file("~/.ssh/mykeypair.pem")
     host        = self.public_ip
   }
-  depends_on = [ var.vio_sg ]
+  depends_on = [ var.pub_sg ]
 }
 
 resource "aws_instance" "private" {
@@ -26,7 +26,7 @@ resource "aws_instance" "private" {
   instance_type = "t2.micro"
   key_name      = "Nebou-key"
   subnet_id     = var.subnet_ids_priv
-  vpc_security_group_ids = [var.vio_sg]
+  vpc_security_group_ids = [var.priv_sg]
   
   tags = {
     Name = "Private Instance"
@@ -38,5 +38,5 @@ resource "aws_instance" "private" {
     private_key = file("~/.ssh/mykeypair.pem")
     timeout     = "2m"
   }
-  depends_on = [ var.vio_sg ]
+  depends_on = [ var.priv_sg ]
 }
