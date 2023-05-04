@@ -19,5 +19,6 @@ module "EC2"{
   subnet_ids_priv = module.Network.subnet_id_priv 
   pub_sg = module.Network.pub_sg
   priv_sg = module.Network.priv_sg
+  vio_sg= module.Network.vio_sg
   vpc_id= module.Network.vpc_id
 }
