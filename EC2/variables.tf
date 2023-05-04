@@ -23,7 +23,3 @@ variable "priv_sg" {
   description = "List of IDs for the subnets to launch instances in"
   type        = string
 }
-variable "vio_sg" {
-  description = "List of IDs for the subnets to launch instances in"
-  type        = string
-}
