@@ -54,7 +54,7 @@ resource "aws_route_table" "priv-rt" {
   }
 }
 resource "aws_internet_gateway" "gw" {
- vpc_id = aws_vpc.My_VPC.id
+ vpc_id = aws_vpc.vnet-nebo.id
  tags = {
         Name = "My VPC Internet Gateway"
   }
