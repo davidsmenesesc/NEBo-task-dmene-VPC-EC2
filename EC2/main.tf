@@ -31,11 +31,18 @@ resource "aws_instance" "private" {
   tags = {
     Name = "Private Instance"
   }
+  depends_on = [ var.priv_sg ]
+}
+resource "null_resource" "ssh_tunnel" {
+  depends_on = [aws_instance.private]
   connection {
     type        = "ssh"
     user        = "ec2-user"
+    host        = aws_instance.public.public_ip
     private_key = file("~/.ssh/mykeypair.pem")
-    host        = self.public_ip
+    timeout     = "2m"
   }
-  depends_on = [ var.priv_sg ]
+  provisioner "local-exec" {
+    command = "ssh -o StrictHostKeyChecking=no -i ${var.private_key_path} -N -L 2222:${aws_instance.private.private_ip}:22 ec2-user@${aws_instance.bastion.public_ip}"
+  }
 }
