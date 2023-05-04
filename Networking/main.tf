@@ -1,13 +1,18 @@
+#Define provider
 provider "aws" {
   region = var.region
 }
+#Define VPC
 resource "aws_vpc" "vnet-nebo" {
   cidr_block = "10.0.0.0/16"
   enable_dns_hostnames = true
+  enable_dns_support   = "true"
+  instance_tenancy     = "default"
   tags = {
     Name = "vnet-nebo"
   }
 }
+#Define subnets
 resource "aws_subnet" "snet-public" {
   vpc_id = aws_vpc.vnet-nebo.id
   cidr_block = "10.0.0.0/17"
@@ -58,13 +63,7 @@ resource "aws_route_table_association" "snet-private" {
   route_table_id =  aws_route_table.public-rt.id
   depends_on = [ aws_subnet.snet-private ]
 }
-# Define the internet gateway
-resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.vnet-nebo.id
-  tags= {
-    Name= "igFromTerraform"
-  }
-}
+
 resource "aws_route" "route-pub" {
   route_table_id = aws_route_table.public-rt.id
   destination_cidr_block = "0.0.0.0/0"
