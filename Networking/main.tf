@@ -91,4 +91,22 @@ resource "aws_security_group" "private" {
   tags = {
     Name = "Private Security Group"
   }
+resource "aws_security_group" "private" {
+  name_prefix = "private"
+  vpc_id = aws_vpc.vnet-nebo.id
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    security_groups = [aws_security_group.public.id]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    security_groups = [aws_security_group.public.id]
+  }
+  tags = {
+    Name = "Private Security Group"
+  }
 }
