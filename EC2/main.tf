@@ -31,15 +31,12 @@ resource "aws_instance" "private" {
   tags = {
     Name = "Private Instance"
   }
-  depends_on = [ var.priv_sg ]
-}
-resource "null_resource" "ssh_tunnel" {
-  depends_on = [aws_instance.private]
   connection {
     type        = "ssh"
-    user        = "ec2-user"
+    user        = "ubuntu"
     host        = aws_instance.public.public_ip
     private_key = file("~/.ssh/mykeypair.pem")
     timeout     = "2m"
   }
+  depends_on = [ var.priv_sg ]
 }
