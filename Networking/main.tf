@@ -71,6 +71,6 @@ resource "aws_route_table_association" "snet-public" {
 }
 resource "aws_route_table_association" "snet-private" {
   subnet_id = aws_subnet.snet-private.id
-  route_table_id = aws_vpc.vnet-nebo.default_route_table_id
+  route_table_id =  aws_route_table.public-rt.id
   depends_on = [ aws_subnet.snet-private ]
 }
