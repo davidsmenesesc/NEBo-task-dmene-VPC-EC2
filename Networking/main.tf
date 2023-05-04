@@ -53,6 +53,12 @@ resource "aws_route_table" "priv-rt" {
     Name= "priv-route-table" 
   }
 }
+resource "aws_internet_gateway" "gw" {
+ vpc_id = aws_vpc.My_VPC.id
+ tags = {
+        Name = "My VPC Internet Gateway"
+  }
+}
 resource "aws_route_table_association" "snet-public" {
   subnet_id = aws_subnet.snet-public.id
   route_table_id = aws_route_table.public-rt.id
