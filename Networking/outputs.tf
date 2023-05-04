@@ -18,7 +18,3 @@ output "priv_sg" {
   description = "List of IDs for the created subnets"
   value       = aws_security_group.private.id
 }
-output "vio_sg" {
-  description = "List of IDs for the created subnets"
-  value       = aws_security_group.violation.id
-}
