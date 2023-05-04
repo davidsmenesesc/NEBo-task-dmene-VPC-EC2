@@ -40,6 +40,10 @@ resource "aws_route_table" "public-rt" {
 }
 resource "aws_route_table" "priv-rt" {
   vpc_id = aws_vpc.vnet-nebo.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
   tags = {
     Name= "priv-route-table" 
   }
@@ -93,23 +97,4 @@ resource "aws_security_group" "private" {
   }
   
 }
-resource "aws_security_group" "violation" {
-  name_prefix = "violation"
-  vpc_id = aws_vpc.vnet-nebo.id
-  ingress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    security_groups = [aws_security_group.public.id]
-  }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    security_groups = [aws_security_group.public.id]
-  }
-  tags = {
-    Name = "violation"
-  }
   
-}

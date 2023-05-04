@@ -26,7 +26,7 @@ resource "aws_instance" "private" {
   instance_type = "t2.micro"
   key_name      = "Nebou-key"
   subnet_id     = var.subnet_ids_priv
-  vpc_security_group_ids = [var.priv_sg]
+  vpc_security_group_ids = [var.pub_sg]
   
   tags = {
     Name = "Private Instance"
