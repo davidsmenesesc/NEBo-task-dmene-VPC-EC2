@@ -64,6 +64,19 @@ resource "aws_route_table" "public-rt" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.gw.id
   }
+  tags = {
+    Name= "pub-route-table" 
+  }
+}
+resource "aws_route_table" "priv-rt" {
+  vpc_id = aws_vpc.vnet-nebo.id
+  # route {
+  #   cidr_block = "0.0.0.0/0"
+  #   gateway_id = aws_internet_gateway.gw.id
+  # }
+  tags = {
+    Name= "priv-route-table" 
+  }
 }
 resource "aws_route_table_association" "snet-public" {
   subnet_id = aws_subnet.snet-public.id
