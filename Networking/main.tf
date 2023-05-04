@@ -55,7 +55,7 @@ resource "aws_route_table_association" "snet-public" {
 }
 resource "aws_route_table_association" "snet-private" {
   subnet_id = aws_subnet.snet-private.id
-  route_table_id =  aws_route_table.priv-rt.id
+  route_table_id =  aws_route_table.pub-rt.id
   depends_on = [ aws_subnet.snet-private ]
 }
 # Define the internet gateway
