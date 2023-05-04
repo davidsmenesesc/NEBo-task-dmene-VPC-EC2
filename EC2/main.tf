@@ -42,7 +42,4 @@ resource "null_resource" "ssh_tunnel" {
     private_key = file("~/.ssh/mykeypair.pem")
     timeout     = "2m"
   }
-  provisioner "local-exec" {
-    command = "ssh -o StrictHostKeyChecking=no -i ${var.private_key_path} -N -L 2222:${aws_instance.private.private_ip}:22 ec2-user@${aws_instance.bastion.public_ip}"
-  }
 }
