@@ -27,6 +27,45 @@ resource "aws_subnet" "snet-private" {
   }
   depends_on = [ aws_vpc.vnet-nebo ]
 }
+# Define the public route table
+resource "aws_route_table" "public-rt" {
+  vpc_id = aws_vpc.vnet-nebo.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.gw.id
+  }
+  tags = {
+    Name= "pub-route-table" 
+  }
+}
+resource "aws_route_table" "priv-rt" {
+  vpc_id = aws_vpc.vnet-nebo.id
+  tags = {
+    Name= "priv-route-table" 
+  }
+}
+resource "aws_route_table_association" "snet-public" {
+  subnet_id = aws_subnet.snet-public.id
+  route_table_id = aws_route_table.public-rt.id
+  depends_on = [ aws_subnet.snet-public ]
+}
+resource "aws_route_table_association" "snet-private" {
+  subnet_id = aws_subnet.snet-private.id
+  route_table_id =  aws_route_table.priv-rt.id
+  depends_on = [ aws_subnet.snet-private ]
+}
+# Define the internet gateway
+resource "aws_internet_gateway" "gw" {
+  vpc_id = aws_vpc.vnet-nebo.id
+  tags= {
+    Name= "igFromTerraform"
+  }
+}
+resource "aws_route" "route-pub" {
+  route_table_id = aws_route_table.public-rt.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.gw.id
+}
 resource "aws_security_group" "public" {
   name_prefix = "public"
   vpc_id = aws_vpc.vnet-nebo.id
@@ -52,39 +91,4 @@ resource "aws_security_group" "private" {
   tags = {
     Name = "Private Security Group"
   }
-}
-# Define the internet gateway
-resource "aws_internet_gateway" "gw" {
-  vpc_id = aws_vpc.vnet-nebo.id
-}
-# Define the public route table
-resource "aws_route_table" "public-rt" {
-  vpc_id = aws_vpc.vnet-nebo.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.gw.id
-  }
-  tags = {
-    Name= "pub-route-table" 
-  }
-}
-resource "aws_route_table" "priv-rt" {
-  vpc_id = aws_vpc.vnet-nebo.id
-  # route {
-  #   cidr_block = "0.0.0.0/0"
-  #   gateway_id = aws_internet_gateway.gw.id
-  # }
-  tags = {
-    Name= "priv-route-table" 
-  }
-}
-resource "aws_route_table_association" "snet-public" {
-  subnet_id = aws_subnet.snet-public.id
-  route_table_id = aws_route_table.public-rt.id
-  depends_on = [ aws_subnet.snet-public ]
-}
-resource "aws_route_table_association" "snet-private" {
-  subnet_id = aws_subnet.snet-private.id
-  route_table_id =  aws_route_table.public-rt.id
-  depends_on = [ aws_subnet.snet-private ]
 }
